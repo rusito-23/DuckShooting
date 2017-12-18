@@ -4,7 +4,7 @@
 #Modules
 
 #MUGEN
- 
+
 import math
 import os
 import sys, pygame
@@ -59,8 +59,8 @@ class Duck(pygame.sprite.Sprite):
             self.__init__(self.color, "left", 900, self.rect.centery, self.speed)
 
         elif self.rect.centerx <= 0 :
-            self.__init__(self.color, "right", 0, self.rect.centery, self.speed) 
-        
+            self.__init__(self.color, "right", 0, self.rect.centery, self.speed)
+
 
     def move(self):
         if not self.dead :
@@ -70,7 +70,7 @@ class Duck(pygame.sprite.Sprite):
             elif  self.direction == "right":
                 self.rect.centerx += self.speed
                 self.target.midbottom = self.rect.midbottom
-        
+
     def die(self) :
         self.dead = True
         self.image = load_image("shot_grey_large.png")
@@ -118,14 +118,15 @@ class Counter(pygame.sprite.DirtySprite) :
     def __init__(self) :
         self.counter = 0
         self.string = str(self.counter)
-        
+
     def increase(self) :
         self.counter += 1
         self.string = str(self.counter)
 
-    def draw(self, screen, (x, y) ) :
+    def draw(self, screen, xxx_todo_changeme ) :
+        (x, y) = xxx_todo_changeme
         draw_score(self.string, screen, "_small", (x, y))
-        
+
 
 
 #Bullet class
@@ -137,7 +138,7 @@ class Bullet(pygame.sprite.DirtySprite) :
         self.path2 = "_long.png"
         self.image = load_image(self.path + self.look + self.path2)
         self.rect = self.image.get_rect()
-        self.rect.centerx = x 
+        self.rect.centerx = x
         self.rect.centery = 30
 
     def shoot(self, x) :
@@ -160,7 +161,7 @@ class Button(pygame.sprite.DirtySprite) :
         self.textrect.center = center
         self.rect = self.textrect
 
-    def draw(self, screen) : 
+    def draw(self, screen) :
         screen.blit(self.textsurf, self.textrect)
 
 
@@ -193,8 +194,8 @@ class Duckie(pygame.sprite.Sprite):
             self.__init__(self.color, "left", 900, self.rect.centery, self.speed)
 
         elif self.rect.centerx <= 0 :
-            self.__init__(self.color, "right", 0, self.rect.centery, self.speed) 
-        
+            self.__init__(self.color, "right", 0, self.rect.centery, self.speed)
+
 
     def move(self):
             if self.direction == "left":
@@ -205,7 +206,8 @@ class Duckie(pygame.sprite.Sprite):
                 self.target.midbottom = self.rect.midbottom
 
 class Shot(pygame.sprite.DirtySprite) :
-    def __init__(self, (x, y)) :
+    def __init__(self, xxx_todo_changeme1) :
+        (x, y) = xxx_todo_changeme1
         self.look = random.choice(["grey", "yellow"])
         self.image = load_image("shot_" + self.look + "_large.png")
         self.rect = self.image.get_rect()
@@ -228,8 +230,8 @@ def text_objects(text, font, color):
 
 def load_image(filename):
     try : image = pygame.image.load(os.path.join(path, filename))
-    except pygame.error, message:
-        raise SystemExit, message
+    except pygame.error as message:
+        raise SystemExit(message)
     image = image.convert_alpha()
     return image
 
@@ -242,7 +244,7 @@ def init_ducks(ducks, howmanyducks) :
         y += 80
         direction = random.choice(["left", "right"])
         color = random.choice(["brown", "white", "yellow"])
-        
+
         ducks.append(Duck(color, direction, x, y, speed))
 
 def init_bullets(bullets, ammo) :
@@ -254,8 +256,9 @@ def init_bullets(bullets, ammo) :
         x -= 25
 
 
-def draw_score(score, screen, size, (x, y)) :
+def draw_score(score, screen, size, xxx_todo_changeme2) :
 
+    (x, y) = xxx_todo_changeme2
     cero = load_image("text_0" + size + ".png")
     cero_rect = cero.get_rect()
 
@@ -294,8 +297,6 @@ def game_over(screen, total_score, rifle) :
 
     shoot_sound = pygame.mixer.Sound(os.path.join(path, "shot.wav"))
     shoot_sound.set_volume(0.1)
-    reload_sound = pygame.mixer.Sound(os.path.join(path, "reload.wav"))
-
 
     score = "SCORE : " + str(total_score)
 
@@ -330,7 +331,7 @@ def game_over(screen, total_score, rifle) :
                     main(screen, rifle)
 
         screen.blit(game_over_background, (0,0))
-        
+
         quit_button.draw(screen)
         restart_button.draw(screen)
         score_caption.draw(screen)
@@ -371,7 +372,7 @@ def menu() :
 
     shots = []
 
-    while True : 
+    while True :
 
         time = clock.tick(60)
 
@@ -408,7 +409,7 @@ def menu() :
 
         screen.blit(mouse.image, mouse.rect)
 
-        pygame.display.flip()        
+        pygame.display.flip()
 
     return 0
 
@@ -428,10 +429,10 @@ def gun_select(screen) :
     rifle_red = load_image("rifle_red.png")
     rifle_red_rect = rifle_red.get_rect()
     rifle_red_rect.centerx, rifle_red_rect.centery = 600, 400
-    
 
 
-    while True : 
+
+    while True :
 
         time = clock.tick(60)
 
@@ -459,7 +460,7 @@ def gun_select(screen) :
 
         screen.blit(mouse.image, mouse.rect)
 
-        pygame.display.flip()        
+        pygame.display.flip()
 
     return 0
 
@@ -468,8 +469,11 @@ def gun_select(screen) :
 #Main game definition
 
 def main(screen, rifle):
+
+    print("ENTRE A MAIN")
+
     global speed
-    global ammo 
+    global ammo
 
     howmanyducks = 0
     ducks = []
@@ -484,6 +488,7 @@ def main(screen, rifle):
     background_image = load_image("background.png")
     clock = pygame.time.Clock()
 
+    print("Pase game features")
     #initalize classes
     ducks[:] = []
     init_ducks(ducks, howmanyducks)
@@ -495,15 +500,11 @@ def main(screen, rifle):
     init_bullets(bullets, ammo)
 
     #Sounds
-
     shoot_sound = pygame.mixer.Sound(os.path.join(path, "shot.wav"))
     shoot_sound.set_volume(0.1)
-    reload_sound = pygame.mixer.Sound(os.path.join(path, "reload.wav"))
-
 
     #Main Game Loop
     while True:
-
         if counter.counter == howmanyducks :
 
             counter.__init__()
@@ -536,11 +537,11 @@ def main(screen, rifle):
                 ammo -= 1
                 shoot_sound.play()
 
-                print "Is clicked!"
+                print("Is clicked!")
                 for duck in ducks :
                     if duck.target.collidepoint(mouse.get_pos()):
                         if not duck.dead :
-                            print "Duck dead!"
+                            print("Duck dead!")
                             duck.die()
                             counter.increase()
                             total_score.increase()
@@ -582,4 +583,3 @@ if __name__ == '__main__':
     pygame.mixer.pre_init(44100, -16, 2, 2048)
     pygame.init()
     menu()
-
